@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
-use App\Http\Components\Message;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
@@ -16,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
-    use Message;
     // Enable multiple user to login at the same time
     protected $multi_login = true;
 

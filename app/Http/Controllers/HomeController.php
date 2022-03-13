@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+use App\Http\Controllers\Controller;
+
+use App\Models\User;
+use Laravel\Sanctum\PersonalAccessToken;
+
+
 class HomeController extends Controller
 {
     /**
@@ -21,8 +28,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('home');
+        // $user = auth()->user();
+        // $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
+        // return response()->json([ 
+        //     "access_token" => $access_token,
+        //     "token_type" => "Bearer"
+        // ]);
     }
 }
