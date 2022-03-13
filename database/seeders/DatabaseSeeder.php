@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $global_password = env('APP_GLOBAL_PASSWORD');
         $account_type = Account::create([
             'name' => 'admin'
         ]);
@@ -24,7 +25,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'user'
         ]);
 
-        $global_password = env('APP_GLOBAL_PASSWORD');
+        
+        User::create([
+            "name" => "Shaon Majumder",
+            "email" => "smazoomder@gmail.com",
+            "password" => bcrypt($global_password),
+            "account_type" => $account_type->id
+        ]);
+
         User::create([
             "name" => "Global Admin",
             "email" => "admin@admin.com",

@@ -20,6 +20,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'account_type' => Account::all()->random()->id,
+            'status' => true,
             'password' => bcrypt( env('APP_GLOBAL_PASSWORD') ),
             'remember_token' => Str::random(10),
         ];
