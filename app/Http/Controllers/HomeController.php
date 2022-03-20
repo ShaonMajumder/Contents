@@ -30,12 +30,15 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return view('home');
-        // $user = auth()->user();
-        // $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
-        // return response()->json([ 
-        //     "access_token" => $access_token,
-        //     "token_type" => "Bearer"
-        // ]);
+        return view('home');   
+    }
+
+    public function extToken(Request $request){
+        $user = auth()->user();
+        $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
+        return response()->json([ 
+            "text" => "jsonstart".json_encode(array("access_token"=>$access_token,"token_type"=>"Bearer"))."jsonstop"
+
+        ]);
     }
 }
