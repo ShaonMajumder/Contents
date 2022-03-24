@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\V1\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,5 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+Route::get('/weblogin', [LoginController::class, "webLogin"])->middleware('auth');
+// /weblogin
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/exttoken', [App\Http\Controllers\HomeController::class, 'extToken'])->middleware(['auth']);

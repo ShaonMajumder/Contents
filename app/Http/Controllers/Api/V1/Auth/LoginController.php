@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -51,6 +52,19 @@ class LoginController extends Controller
                 return $this->apiOutput(Response::HTTP_INTERNAL_SERVER_ERROR, $this->getExceptionError($e));
             }
             
+        }
+    }
+
+    public function webLogin(Request $request){
+        if(Auth::check()){
+            $user = auth()->user();
+            $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
+            $this->access_token = $access_token;
+            $this->data['profile'] = $user;
+            $this->apiSuccess();
+            return $this->apiOutput(Response::HTTP_OK, "Loggeed In Successfully!");
+        }else{
+            return $this->apiOutput(Response::HTTP_FORBIDDEN, "Not Logeed in Successfully!");
         }
     }
 
