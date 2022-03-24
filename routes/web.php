@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/weblogin', [LoginController::class, "webLogin"])->middleware('auth');
+Route::get('/weblogin', [LoginController::class, "webLogin"]);
 // /weblogin
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/exttoken', [App\Http\Controllers\HomeController::class, 'extToken'])->middleware(['auth']);
