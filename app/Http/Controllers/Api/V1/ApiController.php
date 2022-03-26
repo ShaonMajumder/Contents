@@ -22,12 +22,25 @@ class ApiController extends Controller
             $date = Carbon::parse($request->visit_time);
             $domain = parse_url($request->get('url'))['host'];
 
-            $site = Site::firstOrCreate(['host' => $domain]);           
+            $site = Site::firstOrCreate(['host' => $domain]);
+
+            if( $request->previous_gmt_time != null){
+                $recent_open = History::where('tab_id',$request->tab_id)
+                    ->where('visit_time', $request->previous_gmt_time)
+                    ->first();
+                if($recent_open){
+                    $recent_open->spent_time = $request->spent_time;
+                    $recent_open->save();
+                }
+                
+            }
+
             $history = History::create([
                 'title'      => $request->title,
                 'url'        => $request->url,
                 'visit_time' => $date->format('Y-m-d H:i:s T'),
-                'site_id'    => $site->id
+                'site_id'    => $site->id,
+                'tab_id' => $request->tab_id,
             ]);
             
             $this->apiSuccess();

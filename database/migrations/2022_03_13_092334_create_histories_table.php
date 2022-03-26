@@ -18,6 +18,8 @@ class CreateHistoriesTable extends Migration
             $table->string('title');
             $table->string('url');
             $table->string('visit_time');
+            $table->string('spent_time')->nullable();
+            $table->string('tab_id');
             $table->foreignId('site_id')->constrained('sites');
             $table->text('tags_ids')->nullable();
             $table->timestamps();
