@@ -13,9 +13,5 @@ class History extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'title',
-        'url',
-        'site_id'
-    ];
+    protected $guarded = ['id'];
 }
