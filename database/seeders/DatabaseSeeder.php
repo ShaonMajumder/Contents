@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Account;
 use Illuminate\Database\Seeder;
-use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,31 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        $global_password = env('APP_GLOBAL_PASSWORD');
-        $account_type = Account::create([
-            'name' => 'admin'
+        $result = $this->call([
+            InitSeeder::class,
         ]);
 
-        $account_type_2 = Account::create([
-            'name' => 'user'
-        ]);
-
+        $account_seeder = new AccountSeeder();
+        $account_types = $account_seeder->run();
+        $user_seeder = new UserSeeder($account_types);
+        $user_seeder->run();
         
-        User::create([
-            "name" => "Shaon Majumder",
-            "email" => "smazoomder@gmail.com",
-            "password" => bcrypt($global_password),
-            "account_type" => $account_type->id
-        ]);
-
-        User::create([
-            "name" => "Global Admin",
-            "email" => "admin@admin.com",
-            "password" => bcrypt($global_password),
-            "account_type" => $account_type->id
-        ]);
-
-        User::factory(10)->create();
     }
 }
