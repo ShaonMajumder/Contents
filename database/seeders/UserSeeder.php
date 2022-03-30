@@ -27,17 +27,18 @@ class UserSeeder extends Seeder
                 "name" => "Shaon Majumder",
                 "email" => "smazoomder@gmail.com",
                 "password" => bcrypt($global_password),
-                "account_type" => 1
+                "account_type" => $this->account_types->where('name','admin')->first()->id
             ],
             [
                 "name" => "Global Admin",
                 "email" => "admin@admin.com",
                 "password" => bcrypt($global_password),
-                "account_type" => 1
+                "account_type" => $this->account_types->where('name','admin')->first()->id
             ]
         ];
 
         User::insert($users);
         User::factory(10)->create();
+        return User::all();
     }
 }

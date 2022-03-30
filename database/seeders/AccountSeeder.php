@@ -20,7 +20,7 @@ class AccountSeeder extends Seeder
             [ 'name' => 'user' ]
         ];
 
-        $accounts = Account::insert($account_types);
+        Account::insert($account_types);
         return Account::all();
         
     }
