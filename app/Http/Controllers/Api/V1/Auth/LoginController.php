@@ -19,6 +19,19 @@ class LoginController extends Controller
     // Enable multiple user to login at the same time
     protected $multi_login = true;
 
+    public function webLogin(Request $request){
+        if(Auth::check()){
+            $user = auth()->user();
+            $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
+            $this->access_token = $access_token;
+            $this->data['profile'] = $user;
+            $this->apiSuccess();
+            return $this->apiOutput(Response::HTTP_OK, "Loggeed In Successfully!");
+        }else{
+            return $this->apiOutput(Response::HTTP_FORBIDDEN, "Not Logeed in Successfully!");
+        }
+    }
+    
     /**
      * Method for Login
      */
@@ -55,18 +68,7 @@ class LoginController extends Controller
         }
     }
 
-    public function webLogin(Request $request){
-        if(Auth::check()){
-            $user = auth()->user();
-            $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
-            $this->access_token = $access_token;
-            $this->data['profile'] = $user;
-            $this->apiSuccess();
-            return $this->apiOutput(Response::HTTP_OK, "Loggeed In Successfully!");
-        }else{
-            return $this->apiOutput(Response::HTTP_FORBIDDEN, "Not Logeed in Successfully!");
-        }
-    }
+
 
     /**
      * Expire Specific User Access

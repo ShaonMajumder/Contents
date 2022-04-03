@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
+use Illuminate\View\View;
 use Laravel\Sanctum\PersonalAccessToken;
 
 
@@ -33,12 +34,14 @@ class HomeController extends Controller
         return view('home');   
     }
 
+    /** obsolute */
     public function extToken(Request $request){
         $user = auth()->user();
         $access_token = $user->createToken( $request->device_name ?? ($request->ip() ?? "Unknown") )->plainTextToken;
-        return response()->json([ 
-            "text" => "jsonstart".json_encode(array("access_token"=>$access_token,"token_type"=>"Bearer"))."jsonstop"
-
-        ]);
+        return  'jsonstart'. json_encode([ 
+            "access_token"=>$access_token,
+            "token_type"=>"Bearer"
+        ]) . 'jsonstop';
+       
     }
 }

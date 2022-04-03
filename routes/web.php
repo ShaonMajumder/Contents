@@ -23,4 +23,6 @@ Auth::routes();
 Route::get('/weblogin', [LoginController::class, "webLogin"]);
 // /weblogin
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/** obsolute */
 Route::get('/exttoken', [App\Http\Controllers\HomeController::class, 'extToken'])->middleware(['auth']);
