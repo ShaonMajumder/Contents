@@ -28,12 +28,15 @@ class ApiController extends Controller
                 $recent_open = History::where('tab_id',$request->tab_id)
                     ->where('visit_time', $request->tab_open_gmt_time)
                     ->first();
-                if($recent_open and $recent_open->spent_time == NULL){
-                    $recent_open->spent_time = $request->spent_time;
-                    $recent_open->save();
-                }else{
-                    $recent_open->spent_time = $recent_open->spent_time + $request->spent_time;
-                    $recent_open->save();
+                    
+                if($recent_open ){
+                    if($recent_open->spent_time == NULL){
+                        $recent_open->spent_time = $request->spent_time;
+                        $recent_open->save();
+                    }else{
+                        $recent_open->spent_time = $recent_open->spent_time + $request->spent_time;
+                        $recent_open->save();
+                    }
                 }
                 
             }
